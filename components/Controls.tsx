@@ -9,9 +9,6 @@ interface ControlsProps {
 }
 
 const Controls: React.FC<ControlsProps> = ({ state, onUpdate }) => {
-  const clipDuration = state.trimEnd - state.trimStart;
-  const isGifAllowed = clipDuration <= 10;
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Panel Izquierdo: Efectos y Transiciones */}
@@ -122,7 +119,7 @@ const Controls: React.FC<ControlsProps> = ({ state, onUpdate }) => {
                     <Film className="w-5 h-5 mr-2 text-brand-cyan" />
                     Formato de Exportación
                 </h3>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 gap-2">
                     <button
                         onClick={() => onUpdate({ selectedFormat: 'mp4' })}
                         className={`p-3 rounded-lg text-sm font-bold border transition-all ${
@@ -142,20 +139,6 @@ const Controls: React.FC<ControlsProps> = ({ state, onUpdate }) => {
                         }`}
                     >
                         WebM
-                    </button>
-                    <button
-                        onClick={() => {
-                            if (isGifAllowed) onUpdate({ selectedFormat: 'gif' });
-                        }}
-                        disabled={!isGifAllowed}
-                        className={`p-3 rounded-lg text-sm font-bold border transition-all ${
-                            state.selectedFormat === 'gif' 
-                            ? 'bg-brand-cyan/20 border-brand-cyan text-brand-cyan' 
-                            : 'bg-slate-800 border-slate-600 text-slate-400'
-                        } ${!isGifAllowed ? 'opacity-50 cursor-not-allowed' : 'hover:border-slate-500'}`}
-                    >
-                        GIF
-                        {!isGifAllowed && <span className="block text-[10px] font-normal opacity-70">Sólo &le; 10s</span>}
                     </button>
                 </div>
             </div>

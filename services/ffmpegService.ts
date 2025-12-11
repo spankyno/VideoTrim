@@ -80,35 +80,26 @@ class FFmpegService {
          // Placeholder for pixelate logic if needed in future
     }
     
-    // GIF specific filters
-    if (selectedFormat === 'gif') {
-        filterChain.push(`fps=10,scale=320:-1:flags=lanczos`);
-    }
-
     if (filterChain.length > 0) {
         args.push('-vf', filterChain.join(','));
     }
 
     // 4. Encoding & Output Settings
-    if (selectedFormat === 'gif') {
-        args.push('-f', 'gif');
+    // Codecs
+    if (selectedFormat === 'webm') {
+        args.push('-c:v', 'libvpx-vp9');
+        args.push('-c:a', 'libvorbis');
     } else {
-        // Codecs
-        if (selectedFormat === 'webm') {
-            args.push('-c:v', 'libvpx-vp9');
-            args.push('-c:a', 'libvorbis');
-        } else {
-            args.push('-c:v', 'libx264');
-            args.push('-preset', 'ultrafast');
-            args.push('-c:a', 'aac');
-        }
+        args.push('-c:v', 'libx264');
+        args.push('-preset', 'ultrafast');
+        args.push('-c:a', 'aac');
+    }
 
-        // Map Audio if replaced
-        if (audioFile) {
-             args.push('-map', '0:v'); // Video from first input
-             args.push('-map', '1:a'); // Audio from second input
-             args.push('-shortest');   // Finish when the shortest stream ends
-        }
+    // Map Audio if replaced
+    if (audioFile) {
+          args.push('-map', '0:v'); // Video from first input
+          args.push('-map', '1:a'); // Audio from second input
+          args.push('-shortest');   // Finish when the shortest stream ends
     }
 
     args.push(outputName);
@@ -118,7 +109,7 @@ class FFmpegService {
 
     // Read result
     const data = await this.ffmpeg.readFile(outputName);
-    return URL.createObjectURL(new Blob([data], { type: selectedFormat === 'gif' ? 'image/gif' : `video/${selectedFormat}` }));
+    return URL.createObjectURL(new Blob([data], { type: `video/${selectedFormat}` }));
   }
 }
 

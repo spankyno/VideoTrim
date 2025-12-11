@@ -1,5 +1,5 @@
 {
   "name": "Aitor's Video Trim",
-  "description": "Herramienta profesional de recorte y edición de vídeo en el navegador. Recorta, añade transiciones, reemplaza audio y exporta a MP4, WebM o GIF.",
+  "description": "Herramienta profesional de recorte y edición de vídeo en el navegador. Recorta, añade transiciones, reemplaza audio y exporta a MP4 o WebM.",
   "requestFramePermissions": []
 }

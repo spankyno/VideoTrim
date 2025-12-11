@@ -8,7 +8,7 @@ export enum ProcessingStatus {
 
 export type TransitionType = 'none' | 'fade' | 'pixelate';
 
-export type ExportFormat = 'mp4' | 'webm' | 'gif';
+export type ExportFormat = 'mp4' | 'webm';
 
 export interface EditorState {
   file: File | null;
